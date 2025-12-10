@@ -1,9 +1,9 @@
 use crate::models::Snapshot;
 use serde_json::{from_str, to_string_pretty};
 use std::sync::Arc;
+use thiserror::Error;
 use tokio::fs;
 use tokio::sync::RwLock;
-use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum SnapshotError {
@@ -48,7 +48,10 @@ impl SnapshotManager {
         }
 
         let raw = fs::read_to_string(&self.file_path).await?;
-        let list: Vec<Snapshot> = from_str(&raw)?;
+        let list: Vec<Snapshot> = match from_str(&raw) {
+            Ok(v) => v,
+            Err(_) => Vec::new(), // fallback if corrupted / empty
+        };
         let mut lock = self.inner.write().await;
         *lock = list;
         Ok(())

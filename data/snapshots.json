@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": "0c923d25-fb3d-4ab0-8116-37fb174c5382",
+    "timestamp": 1765354493570,
+    "message": "Auto snapshot",
+    "status": "green"
+  },
+  {
+    "id": "181c7be4-61c0-46e1-8666-6b04750716f3",
+    "timestamp": 1765354503581,
+    "message": "Auto snapshot",
+    "status": "green"
+  }
+]
