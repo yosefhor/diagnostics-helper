@@ -1,14 +1,46 @@
 [
   {
-    "id": "0c923d25-fb3d-4ab0-8116-37fb174c5382",
-    "timestamp": 1765354493570,
+    "id": "de425f32-dd56-4d8c-9a29-07ff09a5ee6c",
+    "timestamp": 1765455856629,
     "message": "Auto snapshot",
-    "status": "green"
+    "status": "green",
+    "cpu_usage": 12.5,
+    "memory_usage": [
+      2048,
+      8192
+    ]
   },
   {
-    "id": "181c7be4-61c0-46e1-8666-6b04750716f3",
-    "timestamp": 1765354503581,
+    "id": "d05a1918-690c-4c5a-9944-4dd63c425f10",
+    "timestamp": 1765456342198,
     "message": "Auto snapshot",
-    "status": "green"
+    "status": "green",
+    "cpu_usage": 12.5,
+    "memory_usage": [
+      2048,
+      8192
+    ]
+  },
+  {
+    "id": "1ae5f873-ad45-4b53-96bf-a79235a6ef06",
+    "timestamp": 1765456352212,
+    "message": "Auto snapshot",
+    "status": "green",
+    "cpu_usage": 12.5,
+    "memory_usage": [
+      2048,
+      8192
+    ]
+  },
+  {
+    "id": "c6b64db5-5dab-45de-9b28-fe5e08100a57",
+    "timestamp": 1765456362221,
+    "message": "Auto snapshot",
+    "status": "green",
+    "cpu_usage": 12.5,
+    "memory_usage": [
+      2048,
+      8192
+    ]
   }
 ]

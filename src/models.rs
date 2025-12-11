@@ -6,6 +6,8 @@ pub struct Snapshot {
     pub timestamp: u128, // milliseconds since epoch
     pub message: String,
     pub status: String,
+    pub cpu_usage: Option<f32>,
+    pub memory_usage: Option<(u64, u64)>, // (used_mb, total_mb)
 }
 
 #[derive(Debug, Deserialize)]

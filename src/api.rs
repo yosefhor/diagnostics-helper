@@ -1,10 +1,11 @@
 use crate::models::Snapshot;
 use crate::snapshot::SnapshotManager;
+use crate::sysinfo::{get_cpu_usage, get_memory_usage};
 use axum::{
+    Json, Router,
     extract::State,
     http::StatusCode,
-    routing::{get},
-    Json, Router,
+    routing::{get, post},
 };
 use serde::Deserialize;
 use std::sync::Arc;
@@ -17,13 +18,10 @@ pub struct NewSnapshot {
 
 pub fn create_router(manager: Arc<SnapshotManager>) -> Router {
     Router::new()
+        .route("/status", get(get_snapshots))
+        .route("/event", post(post_snapshot))
         .route("/health", get(health))
-        .route("/snapshots", get(get_snapshots).post(post_snapshot))
         .with_state(manager)
-}
-
-async fn health() -> Json<serde_json::Value> {
-    Json(serde_json::json!({ "ok": true }))
 }
 
 async fn get_snapshots(State(manager): State<Arc<SnapshotManager>>) -> Json<Vec<Snapshot>> {
@@ -41,6 +39,8 @@ async fn post_snapshot(
         timestamp: chrono::Utc::now().timestamp_millis() as u128,
         message: payload.message,
         status: payload.status,
+        cpu_usage: get_cpu_usage(),
+        memory_usage: get_memory_usage(),
     };
 
     if let Err(e) = manager.add_snapshot(snap).await {
@@ -52,4 +52,8 @@ async fn post_snapshot(
     }
 
     (StatusCode::CREATED, Json(serde_json::json!({ "ok": true })))
+}
+
+async fn health() -> Json<serde_json::Value> {
+    Json(serde_json::json!("ok"))
 }

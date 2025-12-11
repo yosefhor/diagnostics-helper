@@ -2,15 +2,18 @@ mod api;
 mod config;
 mod models;
 mod snapshot;
+mod sysinfo;
 
 use crate::config::load_config;
 use crate::snapshot::SnapshotManager;
+use dotenv::dotenv;
 use std::sync::Arc;
 use tokio::time::{Duration, sleep};
 use tracing_subscriber::EnvFilter;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    dotenv().ok();
     // Setup logging
     tracing_subscriber::fmt()
         .with_env_filter(EnvFilter::from_default_env())
@@ -39,6 +42,8 @@ async fn main() -> anyhow::Result<()> {
                     timestamp: chrono::Utc::now().timestamp_millis() as u128,
                     message: format!("Auto snapshot"),
                     status: "green".to_string(),
+                    cpu_usage: Some(12.5),
+                    memory_usage: Some((2048, 8192)),
                 };
 
                 if let Err(e) = m.add_snapshot(snap).await {
@@ -59,11 +64,10 @@ async fn main() -> anyhow::Result<()> {
         .listen_addr
         .parse::<std::net::SocketAddr>()
         .expect("invalid listen_addr");
-    tracing::info!("Listening on {}", addr);
-
     let listener = tokio::net::TcpListener::bind(addr).await?;
     
     axum::serve(listener, app).await?;
-
+    
+    tracing::info!("Listening on {}", addr);
     Ok(())
 }
