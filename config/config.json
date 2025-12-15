@@ -1,6 +1,6 @@
 {
   "collect_interval_ms": 10000,
-  "enabled": true,
+  "enabled": false,
   "listen_addr": "127.0.0.1:3000",
   "snapshots_file": "data/snapshots.json"
 }
